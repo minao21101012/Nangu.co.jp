@@ -1,0 +1,470 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background: #0b0b20;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jal-shell {
+    width: min(1440px, calc(100% - 32px));
+    aspect-ratio: 16 / 9;
+    max-height: 900px;
+    margin: 0 auto;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 36px 120px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(180deg, rgba(9, 9, 25, 0.98) 0%, rgba(20, 14, 48, 0.98) 100%);
+}
+
+.jal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 28px 36px;
+    background: linear-gradient(90deg, #01112d 0%, #1f1855 45%, #4b2b82 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.jal-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.jal-logo {
+    width: 86px;
+    height: 86px;
+    border-radius: 18px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+}
+
+.jal-logo-img {
+    max-width: 70px;
+    max-height: 70px;
+    object-fit: contain;
+}
+
+.jal-title {
+    font-size: 30px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.jal-meta {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.flight-detail,
+.time-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 140px;
+}
+
+.flight-code {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.route-text,
+.time-label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    opacity: 0.78;
+    text-transform: uppercase;
+}
+
+#clock {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.jal-main {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+    padding: 32px;
+    height: calc(100% - 132px);
+}
+
+.jal-map-panel,
+.jal-info-panel {
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.map-card {
+    display: grid;
+    gap: 20px;
+    padding: 32px;
+    min-height: 100%;
+}
+
+.photo-rotator {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 320px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.photo-current {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 1;
+    transition: opacity 0.85s ease;
+}
+
+.photo-current.is-fading {
+    opacity: 0;
+}
+
+.photo-caption {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    padding: 10px 14px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    border-radius: 999px;
+}
+
+.map-header {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.72;
+}
+
+.thank-you-panel {
+    display: grid;
+    place-items: center;
+    min-height: 100%;
+    padding: 0 32px;
+}
+
+.thank-you-panel h2 {
+    font-size: 40px;
+    line-height: 1.1;
+    text-align: center;
+    max-width: 520px;
+    margin: 0;
+}
+
+.board-display {
+    display: none;
+}
+
+.show-line {
+    display: none;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.show-stop {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 18px 14px;
+    min-height: 118px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.show-label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    opacity: 0.72;
+    text-transform: uppercase;
+}
+
+.show-stop strong {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+}
+
+.flight-status {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 1120px) {
+    .jal-main {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .show-line {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .jal-shell {
+        width: calc(100vw - 16px);
+        aspect-ratio: auto;
+    }
+
+    .jal-main {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .board-main {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .board-target {
+        max-width: 100%;
+    }
+
+    .show-line {
+        grid-template-columns: 1fr;
+    }
+}
+
+.flight-status div {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 18px 20px;
+    border-radius: 18px;
+    min-width: 140px;
+}
+
+.status-label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    opacity: 0.72;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.status-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #d7bfff;
+}
+
+.flight-map {
+    position: relative;
+    width: 100%;
+    min-height: 320px;
+}
+
+.route-map {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 24px rgba(255,255,255,0.18));
+}
+
+.flight-path {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: drawRoute 4s ease-in-out forwards;
+}
+
+.departure-point,
+.arrival-point,
+.aircraft {
+    filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
+}
+
+.departure-point,
+.arrival-point {
+    fill: #ffffff;
+    stroke: #8c4ec0;
+    stroke-width: 3;
+}
+
+.aircraft {
+    fill: #8c4ec0;
+    animation: moveAircraft 5s ease-in-out infinite alternate;
+}
+
+@keyframes drawRoute {
+    from { stroke-dashoffset: 900; }
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes moveAircraft {
+    from { transform: translate(0, 0); }
+    to { transform: translate(20px, -10px); }
+}
+
+.map-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: rgba(156, 39, 176, 0.15);
+    border-radius: 18px;
+}
+
+.gate-countdown {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.jal-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 32px 0;
+}
+
+.jal-panel-header span:first-child {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.panel-status {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.72;
+}
+
+.screen {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+    padding: 0 32px 32px;
+}
+
+.screen.active {
+    display: block;
+}
+
+.screen h2 {
+    font-size: 30px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+}
+
+.screen p {
+    font-size: 16px;
+    line-height: 1.9;
+    opacity: 0.88;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.info-card {
+    padding: 22px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    min-height: 120px;
+}
+
+.info-card strong {
+    display: block;
+    margin-top: 14px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.service-list {
+    display: grid;
+    gap: 12px;
+    padding-left: 18px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.service-list li {
+    list-style: disc;
+    margin-left: 8px;
+}
+
+[data-lang-ja] {
+    display: inline-block;
+    backface-visibility: hidden;
+    transform-origin: bottom center;
+    transform-style: preserve-3d;
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s ease;
+}
+
+[data-lang-ja].lang-flip {
+    opacity: 0;
+    transform: perspective(900px) translateY(-16px) rotateX(-110deg);
+}
+
+[data-lang-ja].lang-enter {
+    opacity: 0;
+    transform: perspective(900px) translateY(18px) rotateX(95deg);
+}
+
+.thank-you-panel,
+.screen,
+.board-display,
+.map-card {
+    perspective: 900px;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 980px) {
+    .jal-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .jal-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .jal-meta {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .map-footer,
+    .flight-status div {
+        min-width: 0;
+    }
+}
