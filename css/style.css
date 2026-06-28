@@ -169,11 +169,31 @@ body {
     padding: 0 32px;
 }
 
+.thank-you-copy {
+    display: grid;
+    gap: 18px;
+    justify-items: center;
+}
+
 .thank-you-panel h2 {
     font-size: 40px;
     line-height: 1.1;
     text-align: center;
     max-width: 520px;
+    margin: 0;
+}
+
+.schedule-label {
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    opacity: 0.82;
+    margin: 8px 0 0;
+}
+
+.schedule-title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
     margin: 0;
 }
 
@@ -413,24 +433,6 @@ body {
 .service-list li {
     list-style: disc;
     margin-left: 8px;
-}
-
-[data-lang-ja] {
-    display: inline-block;
-    backface-visibility: hidden;
-    transform-origin: bottom center;
-    transform-style: preserve-3d;
-    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.85s ease;
-}
-
-[data-lang-ja].lang-flip {
-    opacity: 0;
-    transform: perspective(900px) translateY(-16px) rotateX(-110deg);
-}
-
-[data-lang-ja].lang-enter {
-    opacity: 0;
-    transform: perspective(900px) translateY(18px) rotateX(95deg);
 }
 
 .thank-you-panel,

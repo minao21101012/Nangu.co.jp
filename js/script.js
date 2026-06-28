@@ -1,11 +1,39 @@
 // 開演時刻 (例: 今日の16:00)
 const SHOW_START_TIME = new Date();
-SHOW_START_TIME.setHours(16, 0, 0, 0);
+SHOW_START_TIME.setHours(9, 0, 0, 0);
 
-// 言語リスト
-const languages = ['ja', 'en', 'ko', 'th'];
-let currentLanguageIndex = 0;
+// 右側メッセージの切り替え間隔
 const LANGUAGE_INTERVAL = 6000; // 6秒
+
+const rightPanelLanguages = ['ja', 'kg', 'en', 'ko', 'th'];
+const rightPanelTexts = {
+    ja: {
+        welcome: 'ご来場ありがとうございます',
+        scheduleLabel: '予定時刻',
+        scheduleTitle: '開会式 09:00'
+    },
+    kg: {
+        welcome: 'ゆくさ おじゃったもんせ',
+        scheduleLabel: '予定時刻',
+        scheduleTitle: '開会式 09:00'
+    },
+    en: {
+        welcome: 'Thank you for coming',
+        scheduleLabel: 'Scheduled time',
+        scheduleTitle: 'Opening Ceremony 09:00'
+    },
+    ko: {
+        welcome: '문화제에 와 주셔서 감사합니다',
+        scheduleLabel: '예정 시각',
+        scheduleTitle: '개회식 09:00'
+    },
+    th: {
+        welcome: 'ขอบคุณที่มาร่วมงานเทศกาล',
+        scheduleLabel: 'กำหนดเวลา',
+        scheduleTitle: 'พิธีเปิด 09:00'
+    }
+};
+let currentRightPanelLanguageIndex = 0;
 
 // 画面切り替え
 const screens = ['screen-1'];
@@ -55,49 +83,25 @@ function updateCountdown() {
 
 // 言語切り替え
 function switchLanguage() {
-    const currentLang = languages[currentLanguageIndex];
-    const languageElements = Array.from(document.querySelectorAll('[data-lang-ja]'));
+    const messageElement = document.getElementById('thank-you-message');
+    const scheduleLabelElement = document.getElementById('schedule-label');
+    const scheduleTitleElement = document.getElementById('schedule-title');
+    const currentLang = rightPanelLanguages[currentRightPanelLanguageIndex];
+    const currentTextSet = rightPanelTexts[currentLang] || rightPanelTexts.ja;
 
-    languageElements.forEach(element => {
-        element.classList.remove('lang-enter');
-        element.classList.add('lang-flip');
-    });
-    
-    setTimeout(() => {
-        languageElements.forEach(element => {
-            const textKey = `data-lang-${currentLang}`;
-            const text = element.getAttribute(textKey);
-            if (text) {
-                // &#10; または改行を <br> に変換
-                element.innerHTML = text.replace(/(?:&#10;|\n)/g, '<br>');
-            }
-        });
+    if (messageElement) {
+        messageElement.innerHTML = currentTextSet.welcome;
+    }
 
-        requestAnimationFrame(() => {
-            languageElements.forEach(element => {
-                element.classList.remove('lang-flip');
-                element.classList.add('lang-enter');
-            });
+    if (scheduleLabelElement) {
+        scheduleLabelElement.textContent = currentTextSet.scheduleLabel;
+    }
 
-            requestAnimationFrame(() => {
-                languageElements.forEach(element => {
-                    element.classList.remove('lang-enter');
-                });
-            });
-        });
-    }, 380);
-    
-    // 言語インジケーターを更新
-    document.querySelectorAll('.lang-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    const activeLangElement = document.getElementById(`lang-${currentLang}`);
-    if (activeLangElement) {
-        activeLangElement.classList.add('active');
+    if (scheduleTitleElement) {
+        scheduleTitleElement.textContent = currentTextSet.scheduleTitle;
     }
     
-    // 次の言語に進める
-    currentLanguageIndex = (currentLanguageIndex + 1) % languages.length;
+    currentRightPanelLanguageIndex = (currentRightPanelLanguageIndex + 1) % rightPanelLanguages.length;
 }
 
 // 画像ローテーション設定
