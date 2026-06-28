@@ -4,6 +4,7 @@ SHOW_START_TIME.setHours(9, 0, 0, 0);
 
 // 右側メッセージの切り替え間隔
 const LANGUAGE_INTERVAL = 6000; // 6秒
+const AD_DISPLAY_DURATION = 12000; // 12秒
 
 const rightPanelLanguages = ['ja', 'kg', 'en', 'ko', 'th'];
 const rightPanelTexts = {
@@ -34,6 +35,15 @@ const rightPanelTexts = {
     }
 };
 let currentRightPanelLanguageIndex = 0;
+let completedLanguageLoops = 0;
+let isShowingAd = false;
+
+const adSources = [
+    'img/広告画像１.png',
+    'img/広告画像２.png',
+    'img/広告画像３.png'
+];
+let currentAdIndex = 0;
 
 // 画面切り替え
 const screens = ['screen-1'];
@@ -83,6 +93,10 @@ function updateCountdown() {
 
 // 言語切り替え
 function switchLanguage() {
+    if (isShowingAd) {
+        return;
+    }
+
     const messageElement = document.getElementById('thank-you-message');
     const scheduleLabelElement = document.getElementById('schedule-label');
     const scheduleTitleElement = document.getElementById('schedule-title');
@@ -102,13 +116,46 @@ function switchLanguage() {
     }
     
     currentRightPanelLanguageIndex = (currentRightPanelLanguageIndex + 1) % rightPanelLanguages.length;
+
+    if (currentRightPanelLanguageIndex === 0) {
+        completedLanguageLoops += 1;
+        if (completedLanguageLoops >= 1) {
+            showAdvertisement();
+        }
+    }
+}
+
+function showAdvertisement() {
+    const adOverlay = document.getElementById('ad-overlay');
+    const adImage = adOverlay ? adOverlay.querySelector('.ad-image') : null;
+    if (!adOverlay) {
+        completedLanguageLoops = 0;
+        return;
+    }
+
+    if (adImage) {
+        adImage.src = adSources[currentAdIndex];
+        currentAdIndex = (currentAdIndex + 1) % adSources.length;
+    }
+
+    isShowingAd = true;
+    adOverlay.classList.add('active');
+    adOverlay.setAttribute('aria-hidden', 'false');
+
+    setTimeout(() => {
+        adOverlay.classList.remove('active');
+        adOverlay.setAttribute('aria-hidden', 'true');
+        completedLanguageLoops = 0;
+        isShowingAd = false;
+    }, AD_DISPLAY_DURATION);
 }
 
 // 画像ローテーション設定
 const photoSources = [
-    { src: 'img/117058.jpg', caption: '写真 1 / 3' },
-    { src: 'img/IMG_5398_01.JPG', caption: '写真 2 / 3' },
-    { src: 'img/minamioosumi.jpg', caption: '写真 3 / 3' }
+    { src: 'img/画像１.jpg', caption: '写真 1 / 4' },
+    { src: 'img/画像２.jpg', caption: '写真 2 / 4' },
+    { src: 'img/画像３.JPG', caption: '写真 3 / 4' },
+    { src: 'img/画像４.jpg', caption: '写真 4 / 4' }
 ];
 let currentPhotoIndex = 0;
 const PHOTO_INTERVAL = 7500; // 7.5秒

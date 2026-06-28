@@ -12,18 +12,43 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .jal-shell {
-    width: min(1440px, calc(100% - 32px));
+    width: min(1440px, calc(100vw - 32px), calc((100vh - 32px) * 16 / 9));
     aspect-ratio: 16 / 9;
-    max-height: 900px;
+    max-height: calc(100vh - 32px);
     margin: 0 auto;
     border-radius: 28px;
     overflow: hidden;
     border: 2px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 36px 120px rgba(0, 0, 0, 0.5);
     background: linear-gradient(180deg, rgba(9, 9, 25, 0.98) 0%, rgba(20, 14, 48, 0.98) 100%);
+    position: relative;
+}
+
+.ad-overlay {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: rgba(4, 5, 16, 0.96);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+    z-index: 10;
+}
+
+.ad-overlay.active {
+    opacity: 1;
+}
+
+.ad-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .jal-header {
